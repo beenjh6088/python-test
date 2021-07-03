@@ -14,10 +14,15 @@ from bs4 import BeautifulSoup
 import requests,re
 #네이버 기사 url만 바꾸기: 따옴표 안에 url을 붙여넣으세요.
 url = 'https://www.dailian.co.kr/news/view/955705/?sc=Naver'
+# url = 'https://www.edaily.co.kr/news/read?newsId=03860566628917720&mediaCodeNo=257'
 headers = {"User-Agent":'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36'}
 res = requests.get(url, headers = headers)
 soup = BeautifulSoup(res.text, 'html.parser')
-print(soup.find_all('title'))
+# print(soup.find_all('title'))
 
 
 #(2)
+for i in soup.find_all('title'):
+    print(i.text)
+for i in soup.find_all('div', {'class':'divtext2'}):
+    print(i.text)
