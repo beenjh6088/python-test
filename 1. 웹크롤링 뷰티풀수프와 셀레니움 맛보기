@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*-
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+# Path : 
+#   PART 2 나에게 필요한 정보 자동으로 모으기 with 파이썬 웹 크롤링
+#   Chapter 1-2. 크롤링 기본개념과 실습
+#   1. 웹크롤링 뷰티풀수프와 셀레니움 맛보기
+# Description :
+#   1. 라이브러리를 찾을 수 없을 경우
+#       1) pip.exe가 설치된 경로로 복사 ex) ~/Python37/Script
+#       2) Command 에서 복사한 경로로 이동
+#       3) pip install [원하는 라이브러리]
+#       4) Editor 다시 실행
+#   2. Selenium 설치시 ChromeDriver 버전과 사용중인 Chrome 버전과 일치해야함
+#   3. 본 강의의 코드대로 실행시 크롬이 비정상 종료. while문을 추가했더니 비정상 종료 이슈 처리
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+# import requests
+# from bs4 import BeautifulSoup
+# req = requests.get("https://www.naver.com")
+# soup = BeautifulSoup(req.content, "html.parser")
+# for i in soup.find_all('a')[:10]:
+#     print(i.text)
+
+
+# from selenium import webdriver as wd
+# driver = wd.Chrome(r"C:\DEV\chromedriver.exe")
+# driver.get('https://www.naver.com')
+
+
+from selenium import webdriver
+driver = webdriver.Chrome(r"C:\DEV\chromedriver.exe")
+url = 'https://www.naver.com/'
+driver.get(url)
+driver.minimize_window
+while(True):
+    pass
