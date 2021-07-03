@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+# Path : 
+# PART 2 나에게 필요한 정보 자동으로 모으기 with 파이썬 웹 크롤링
+# 4. 웹 텍스트를 다뤄야 할 사람이라면 알아야 할 정규식 기본 문법과 실습 (1)
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+import re
+sentence = '나는 오늘 8시에 밥을 먹고 학교에 갔습니다. 학교에는 친구가 있었습니다. 9시부터 수업을 들었습니다. 9시는 졸린 시간입니다.'
+variables = '02-1123-2235, 012-1222-5566, upan@upan.com, idonkno@upan.com, (121212-2233445) (231211-4212345)'
+names = 'Jane, Smith, Chritopher'
+
+# 찾아야 할 패턴, 찾아야 할 문자열
+print(re.search('나는', sentence).group())
+print(re.findall('학교', sentence))
+print(re.findall('\d시', sentence))
+print(re.findall('학교에', sentence))
+print(re.findall('a{3}', 'caaat'))
+print(re.findall('a{2, }', 'caaat'))
+print(re.findall('[a-z]{5}', 'caaat'))
+print(re.findall('[A-Z][a-z]*', names))
+
+# 전화번호
+print(re.findall('\d*-\d*-\d*', variables))
+
+# 주민번호
+print(re.findall('\d{6}-\d{7}', variables))
+
+# 이메일
+print(re.findall('[a-z\.]*@[a-z\.]*', variables))
+
+# 한글
+print(re.findall('[가-힣]*습니다', sentence))
