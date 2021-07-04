@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+# Path : 
+#   PART 2 나에게 필요한 정보 자동으로 모으기 with 파이썬 웹 크롤링
+#   Chapter 2. 뷰티풀 수프
+#   1. 예제 1 특정 브런치 모든 글 크롤링하기
+# Description :
+#   1.
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+
+# 뷰티풀수프 상용어구
+from bs4 import BeautifulSoup  
+import requests,re
+
+
+for i in range(1,10):
+    # 브런치 가져오기 실습
+    url = 'https://brunch.co.kr/@skytreesea/'+str(i)
+    headers = {"User-Agent":'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36'}
+    res = requests.get(url, headers = headers)
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+    # 어떤 하나의 url에서 글을 추출하는 연습
+    for i in soup.find_all('p'):
+        print(i.text)
