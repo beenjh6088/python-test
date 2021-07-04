@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+# Path : 
+#   PART 2 나에게 필요한 정보 자동으로 모으기 with 파이썬 웹 크롤링
+#   Chapter 2. 뷰티풀 수프
+#   2. 예제 2 네이버웹툰 순위 크롤링 후 엑셀로 저장하기(feat pandas)
+# Description :
+#   1.
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+
+# 뷰티풀수프 상용어구
+from bs4 import BeautifulSoup  
+import requests,re
+
+url = 'https://comic.naver.com/webtoon/weekday.nhn'
+headers = {"User-Agent":'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36'}
+res = requests.get(url, headers = headers)
+soup = BeautifulSoup(res.text, 'html.parser')
+total = []
+for i in soup.find_all('ol', {'id':'realTimeRankFavorite'}):
+    for j in i.find_all('a'):
+        total.append([j.get('title'), 'https://comic.naver.com'+j.get('href')])
+        
+print(total)
+import pandas as pd
+pd.DataFrame(total).to_clipboard
