@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+# Path : 
+#   PART 2 나에게 필요한 정보 자동으로 모으기 with 파이썬 웹 크롤링
+#   Chapter 2. 뷰티풀 수프
+#   3. 예제 3. 나만의 영어사전 만들기(feat 다음사전)
+# Description :
+#   1.
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+
+# 뷰티풀수프 상용어구
+from bs4 import BeautifulSoup  
+import requests,re
+
+basic = "https://dic.daum.net"
+words = ['find', 'search', 'advantage']
+total = []
+for word in words:
+    url = 'https://dic.daum.net/search.do?q='+word
+    soup = BeautifulSoup(requests.get(url).text, 'html.parser')
+    new = basic + soup.find('div', {'class':'search_cleanword'}).find('a').get('href')
+    soup2 = BeautifulSoup(requests.get(new).text, 'html.parser')
+    a = [word]
+    for i in soup2.find_all('span', {'class':'txt_mean'})[:3]:
+        a.append(i.text)
+    for i in soup2.find_all('span', {'class':'txt_ex'})[:4]:
+        a.append(i.text)
+    total.append(a)
+
+print(total)
+
+import pandas as pd
+df = pd.DataFrame(total)
+df.to_clipboard()
