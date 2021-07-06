@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+# Path : 
+#   PART 2 나에게 필요한 정보 자동으로 모으기 with 파이썬 웹 크롤링
+#   Chapter 2. 뷰티풀 수프
+#   04. 예제 4 쿠팡에서 나만의 상품정보 만들어 엑셀로 저장(상품명, 가격, 리뷰, 평점)
+# Description :
+#   1.
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+
+# 뷰티풀수프 상용어구
+from bs4 import BeautifulSoup  
+import requests,re
+
+url = 'https://www.coupang.com/np/search?component=&q=무릎담요&channel=user'
+headers = {"User-Agent":'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36'}
+res = requests.get(url, headers = headers)
+soup = BeautifulSoup(res.text, 'html.parser')
+# for i in soup.find_all('div', {'class':'name'}):
+#     print(i.text)
+# for i in soup.find_all('strong', {'class':'price-value'}):
+#     print(i.text)
+for i in soup.find_all('li',{'class':'search-product'}):
+    print(i.find('div',{'class':'name'}).text)
+    print(i.find('strong',{'class':'price-value'}).text)
+    print(i.find('em',{'class':'rating'}).text)
+    print(i.find('span',{'class':'rating-total-count'}).text)
+    
