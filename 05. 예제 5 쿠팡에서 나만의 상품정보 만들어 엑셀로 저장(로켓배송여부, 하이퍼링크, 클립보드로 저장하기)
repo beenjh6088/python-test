@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+# Path : 
+#   PART 2 나에게 필요한 정보 자동으로 모으기 with 파이썬 웹 크롤링
+#   Chapter 2. 뷰티풀 수프
+#   05. 예제 5 쿠팡에서 나만의 상품정보 만들어 엑셀로 저장(로켓배송여부, 하이퍼링크, 클립보드로 저장하기)
+# Description :
+#   1.
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+
+# 뷰티풀수프 상용어구
+from bs4 import BeautifulSoup  
+import requests,re
+product = '노트북'
+url = 'https://www.coupang.com/np/search?component=&q={}&channel=user'.format(product)
+headers = {"User-Agent":'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36'}
+res = requests.get(url, headers = headers)
+soup = BeautifulSoup(res.text, 'html.parser')
+
+total = []
+for i in soup.find_all('li',{'class':'search-product'}):
+    k = []
+    try:
+        k.append(i.find('div',{'class':'name'}).text)
+        k.append(i.find('strong',{'class':'price-value'}).text)
+        k.append(i.find('em',{'class':'rating'}).text)
+        k.append((i.find('span',{'class':'rating-total-count'}).text, ')', ''))
+        k.append('https://www.coupang.com/'+i.find('a').get('href'))
+        if i.find('span',{'class':'badge rocket'}):
+            k.append('rocket')
+        else:
+            k.append('n/a')
+        total.append(k)
+    except:
+        pass
+# print(total)
+import pandas as pd
+df = pd.DataFrame(total, columns=['이름', '가격','리뷰','리뷰어수','URL','로켓'])
+print(df)
+df.to_clipboard()
